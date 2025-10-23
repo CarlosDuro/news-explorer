@@ -1,0 +1,48 @@
+/* ========= TOKENS (Figma-like names) ========= */
+:root {
+  /* Colors */
+  --background: #ffffff; /* page bg */
+  --main-text: #1a1b22; /* primary text */
+  --secondary-text: #b6bcbf; /* muted text */
+  --accent-color: #2f71e5; /* primary / links / buttons */
+  --accent-color-hover: #0050b3; /* hover state */
+  --surface: #f5f6f7; /* light blocks bg */
+  --border-color: #d1d2d6; /* subtle borders */
+  --error-color: #ff0000; /* form error */
+
+  /* Typography */
+  --font-sans:
+    'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans';
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+
+  /* Type scale */
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-base: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 30px;
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* Shape & Elevation */
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* Breakpoints (aprox del layout) */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+}
