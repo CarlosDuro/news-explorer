@@ -103,3 +103,37 @@ input:focus {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ---------- Grid cards ---------- */
+.grid-cards {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 1024px) {
+  .grid-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .grid-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card demo */
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+  background: #fff;
+}
+.card h3 {
+  font-size: var(--fs-lg);
+  margin: 0 0 var(--space-2);
+}
+.card p {
+  color: var(--secondary-text);
+  margin: 0;
+}
