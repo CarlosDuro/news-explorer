@@ -12,46 +12,60 @@ import articleRoutes from './routes/articles.js';
 
 const app = express();
 
-/* Security & utils */
+/* Guardas y diagnostico previo */
+if (!MONGODB_URI) {
+  console.error('❌ MONGODB_URI is not set. Define it in environment variables.');
+  process.exit(1);
+}
+console.log('🔧 NODE_ENV=', NODE_ENV);
+console.log('🔧 PORT=', PORT);
+console.log('🔧 CORS_ORIGIN=', CORS_ORIGIN.join(','));
+console.log('🔧 Mongo host preview=', MONGODB_URI.replace(/\/\/.*?:.*?@/, '//<user>:<pass>@'));
+
 app.use(helmet());
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json());
 
-/* CORS con whitelist múltiple */
 app.use(
   cors({
     origin: function (origin, cb) {
-      if (!origin) return cb(null, true); // Postman/cURL
+      if (!origin) return cb(null, true);
       if (CORS_ORIGIN.length === 0 || CORS_ORIGIN.includes(origin)) return cb(null, true);
-      return cb(new Error('Not allowed by CORS'));
+      return cb(new Error('Not allowed by CORS: ' + origin));
     },
     credentials: true,
   })
 );
 
-/* Rate limit */
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
-/* Health */
 app.get('/healthz', function (_req, res) {
   res.json({ ok: true });
 });
 
-/* Rutas */
 app.use('/auth', authRoutes);
 app.use('/articles', articleRoutes);
 
-/* Celebrate validation errors */
 app.use(celebrateErrors());
-
-/* Error handler final */
 app.use(errorHandler);
 
-/* Start */
+/* Conexión robusta a Mongo + logs */
+mongoose.connection.on('connected', () => console.log('✅ Mongo connected'));
+mongoose.connection.on('error', (err) => console.error('❌ Mongo error:', err?.message || err));
+mongoose.connection.on('disconnected', () => console.warn('⚠️ Mongo disconnected'));
+
 async function start() {
-  await mongoose.connect(MONGODB_URI);
-  app.listen(PORT, function () {
-    console.log('API on :' + PORT);
-  });
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 30000,
+      connectTimeoutMS: 30000,
+    });
+    app.listen(PORT, function () {
+      console.log('🚀 API on :' + PORT);
+    });
+  } catch (err) {
+    console.error('❌ Failed to start server:', err?.message || err);
+    process.exit(1);
+  }
 }
 start();
