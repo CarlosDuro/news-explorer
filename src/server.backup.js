@@ -14,7 +14,7 @@ import authRoutes from './routes/auth.js'; // público (/signup, /signin, /me)
 import articlesRoutes from './routes/articles.js'; // protegido (usa middleware auth dentro de routes)
 
 // App
-undefined
+const app = express();
 app.set('trust proxy', 1); // Render / proxies
 
 /* Seguridad y utilidades */
