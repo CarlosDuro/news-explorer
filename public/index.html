@@ -40,6 +40,20 @@
       </div>
     </div>
   </header>
+
+<main class="container" style="padding:16px 0;">
+  <form id="searchForm" data-search-form class="row" style="gap:8px">
+    <input data-search-input type="text" placeholder="Buscar noticias..." style="flex:1; padding:8px;"/>
+    <button class="btn" type="submit">Search</button>
+  </form>
+  <p id="resultsCount" class="text-muted"></p>
+  <div id="results"></div>
+
+  <section id="savedView" class="saved" style="display:none;">
+    <h2>Saved Articles</h2>
+    <div id="savedList"></div>
+  </section>
+</main>
   <div class="container" style="margin: 32px auto;">
     <h1>News Explorer</h1>
     <section class="grid-cards" style="margin-top:24px;">
