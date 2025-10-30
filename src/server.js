@@ -5,68 +5,87 @@ import morgan from 'morgan';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { errors as celebrateErrors } from 'celebrate';
+
 import { PORT, MONGODB_URI, CORS_ORIGIN, NODE_ENV } from './config/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import authRoutes from './routes/auth.js';
-import articleRoutes from './routes/articles.js';
 
+import searchRoutes from './routes/search.js'; // público
+import authRoutes from './routes/auth.js'; // público (/signup, /signin, /me)
+import articlesRoutes from './routes/articles.js'; // protegido (usa middleware auth dentro de routes)
+
+// App
 const app = express();
+app.set('trust proxy', 1); // Render / proxies
 
-/* Guardas y diagnostico previo */
-if (!MONGODB_URI) {
-  console.error('❌ MONGODB_URI is not set. Define it in environment variables.');
-  process.exit(1);
-}
-console.log('🔧 NODE_ENV=', NODE_ENV);
-console.log('🔧 PORT=', PORT);
-console.log('🔧 CORS_ORIGIN=', CORS_ORIGIN.join(','));
-console.log('🔧 Mongo host preview=', MONGODB_URI.replace(/\/\/.*?:.*?@/, '//<user>:<pass>@'));
-
+/* Seguridad y utilidades */
 app.use(helmet());
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json());
 
-/* Public search endpoint */
-import searchRoutes from './routes/search.js';
-app.use('/search', searchRoutes);
+/* CORS robusto + OPTIONS global */
+const corsOpts = {
+  origin(origin, cb) {
+    if (!origin) return cb(null, true); // allow same-origin / curl
+    if (Array.isArray(CORS_ORIGIN) && (CORS_ORIGIN.length === 0 || CORS_ORIGIN.includes(origin))) {
+      return cb(null, true);
+    }
+    return cb(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOpts));
+app.options('*', cors(corsOpts)); // responde preflight en 204 siempre que pase origin
 
+/* Rate limit (ignora OPTIONS para no romper preflights) */
 app.use(
-  cors({
-    origin: function (origin, cb) {
-      if (!origin) return cb(null, true);
-      if (CORS_ORIGIN.length === 0 || CORS_ORIGIN.includes(origin)) return cb(null, true);
-      return cb(new Error('Not allowed by CORS: ' + origin));
-    },
-    credentials: true,
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    skip: (req) => req.method === 'OPTIONS',
   })
 );
 
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+/* Health */
+app.get('/healthz', (_req, res) => res.json({ ok: true }));
 
-app.get('/healthz', function (_req, res) {
-  res.json({ ok: true });
-});
-
+/* Rutas públicas */
+app.use('/search', searchRoutes);
 app.use('/auth', authRoutes);
-app.use('/articles', articleRoutes);
 
+/* Rutas protegidas (el router ya aplica auth internamente) */
+app.use('/articles', articlesRoutes);
+
+/* Errores de celebrate (400) */
 app.use(celebrateErrors());
+
+/* Manejador final de errores */
 app.use(errorHandler);
 
-/* Conexión robusta a Mongo + logs */
-mongoose.connection.on('connected', () => console.log('✅ Mongo connected'));
-mongoose.connection.on('error', (err) => console.error('❌ Mongo error:', err?.message || err));
-mongoose.connection.on('disconnected', () => console.warn('⚠️ Mongo disconnected'));
-
+// Inicio
 async function start() {
   try {
-    await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 30000,
-      connectTimeoutMS: 30000,
-    });
-    app.listen(PORT, function () {
-      console.log('🚀 API on :' + PORT);
-    });
+    mongoose.connection.on('connected', () => console.log('✅ Mongo connected'));
+    mongoose.connection.on('disconnected', () => console.warn('⚠️ Mongo disconnected'));
+    mongoose.connection.on('error', (e) => console.error('❌ Mongo error', e?.message || e));
+
+    await mongoose.connect(MONGODB_URI);
+    console.log('🔧 NODE_ENV=', NODE_ENV);
+    console.log('🔧 PORT=', PORT);
+    console.log(
+      '🔧 CORS_ORIGIN=',
+      Array.isArray(CORS_ORIGIN) ? CORS_ORIGIN.join(',') : CORS_ORIGIN
+    );
+    console.log(
+      '🔧 Mongo host preview=',
+      (MONGODB_URI || '').replace(/:\/\/.*?:.*?@/, '://<user>:<pass>@').replace(/(\?.*)$/, '?...')
+    );
+
+    app.listen(PORT, () => console.log(`🚀 API on :${PORT}`));
   } catch (err) {
     console.error('❌ Failed to start server:', err?.message || err);
     process.exit(1);
