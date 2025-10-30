@@ -2,38 +2,33 @@
   const form = document.querySelector('[data-search-form]');
   const input = document.querySelector('[data-search-input]');
   const out = document.querySelector('[data-search-out]');
-  const resultsMount = document.getElementById('results');
+  const API = (window.APP_CONFIG && window.APP_CONFIG.API_BASE) || '';
 
   function setLoading(v){
     const btn = form?.querySelector('button[type="submit"]');
     if(btn){ btn.disabled = v; btn.textContent = v ? 'Searching...' : 'Search'; }
   }
 
+  async function doSearch(q){
+    const url = API + '/search?q=' + encodeURIComponent(q);
+    const r = await fetch(url);
+    const data = await r.json();
+    if(!r.ok) throw new Error(data?.message || 'Search error');
+    return data.items || [];
+  }
+
   if(form){
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
       const q = (input?.value||'').trim();
-      if(!q){
-        if(out) out.innerHTML = '<p class="hint">Enter a keyword to search news.</p>';
-        if(resultsMount) resultsMount.innerHTML = '';
-        return;
-      }
+      if(!q){ out && (out.innerHTML = '<p class="hint">Enter a keyword to search news.</p>'); return; }
       setLoading(true);
       try{
-        // DEMO: resultados simulados. Luego se cambiará a fetch real al middleware.
-        await new Promise(r=>setTimeout(r,600));
-        const fake = Array.from({length:6}).map((_,i)=>({
-          title:`${q}: headline #${i+1}`,
-          source:'Demo',
-          date:new Date().toISOString().slice(0,10),
-          href:'https://example.com',
-          text:'Lorem ipsum dolor sit amet...'
-        }));
-        if(out) out.innerHTML = '';
-        // Emitimos con items para que app.js renderice
-        window.dispatchEvent(new CustomEvent('news:searched',{detail:{query:q, count:fake.length, items: fake}}));
+        const items = await doSearch(q);
+        out && (out.innerHTML = '');
+        window.dispatchEvent(new CustomEvent('news:searched',{detail:{query:q, count:items.length, items}}));
       }catch(err){
-        if(out) out.innerHTML = '<p class="hint">Oops, something went wrong. Try again.</p>';
+        out && (out.innerHTML = '<p class="hint">Oops, something went wrong. Try again.</p>');
         console.error(err);
       }finally{
         setLoading(false);
