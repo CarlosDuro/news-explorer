@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>API Test</title>
+  <style>
+    body{font-family:ui-sans-serif,system-ui,Arial;margin:24px}
+    input,button{padding:8px;border-radius:8px;border:1px solid #ddd}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .card{border:1px solid #eee;border-radius:12px;padding:12px;margin:8px 0}
+  </style>
+</head>
+<body>
+  <h1>API Test</h1>
+  <div class="row">
+    <label>API Base URL:
+      <input id="api" size="60" value="https://news-explorer-backend-bo7e.onrender.com"/>
+    </label>
+  </div>
+  <div class="row">
+    <input id="q" placeholder="Query e.g. AI"/>
+    <button id="btn">/search</button>
+  </div>
+  <pre id="status"></pre>
+  <div id="list"></div>
+
+<script>
+document.getElementById('btn').onclick = async ()=>{
+  const base = document.getElementById('api').value.trim();
+  const q = document.getElementById('q').value.trim();
+  const status = document.getElementById('status');
+  const list = document.getElementById('list');
+  status.textContent = 'Searching...';
+  list.innerHTML = '';
+  try{
+    const r = await fetch(base + '/search?q=' + encodeURIComponent(q||'AI'));
+    const data = await r.json();
+    status.textContent = r.ok ? 'OK ' + (data.items||[]).length + ' items' : 'ERR ' + (data.message||r.status);
+    (data.items||[]).forEach(a=>{
+      const div = document.createElement('div'); div.className='card';
+      div.innerHTML = `
+        <b>${a.title||'Untitled'}</b><br/>
+        <small>${a.source||''} • ${a.date||''}</small><br/>
+        <a href="${a.link}" target="_blank">Read</a>`;
+      list.appendChild(div);
+    });
+  }catch(e){
+    status.textContent = 'Fetch error: ' + e.message;
+  }
+};
+</script>
+</body>
+</html>
