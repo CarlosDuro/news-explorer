@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import { errors as celebrateErrors } from 'celebrate';
 import { PORT, MONGODB_URI, CORS_ORIGIN, NODE_ENV } from './config/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import searchRoutes from './routes/search.js';
 
 const app = express();
 app.set('trust proxy', 1);
@@ -59,6 +60,8 @@ app.use(rateLimit({
 }));
 
 /* Health */
+
+app.use(searchRoutes);
 app.get('/healthz', (_, res) => res.json({ ok: true }));
 
 /* ====== TUS RUTAS ======
