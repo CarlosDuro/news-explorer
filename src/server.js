@@ -42,13 +42,12 @@ app.use((req, res, next) => {
 
 app.use(
   helmet({
-    // puedes aflojar esto si necesitas servir imágenes externas
+    // ajusta si luego necesitas imágenes externas
   }),
 );
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(express.json());
 
-/* -------- CORS REAL PARA LAS DEMÁS PETICIONES ---------- */
 const corsOpts = {
   origin(origin, cb) {
     if (!origin) return cb(null, true);
@@ -58,14 +57,12 @@ const corsOpts = {
     return cb(new Error('Not allowed by CORS'));
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization'],
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOpts));
-/* ------------------------------------------------------- */
 
-/* ---------- rate limit (no contamos OPTIONS ni /healthz) ---------- */
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -78,25 +75,20 @@ app.use(
 /* ---------- RUTAS ---------- */
 app.get('/healthz', (req, res) => res.json({ ok: true }));
 
-// auth
 app.use('/auth', authRoutes);
 
-// artículos (dos prefijos para que el frontend y tus pruebas curl funcionen)
+// aquí montamos en los dos prefijos
 app.use('/articles', articleRoutes);
 app.use('/api/articles', articleRoutes);
 
-/* celebrate errors (400 bonitas) */
 app.use(celebrateErrors());
 
-/* 404 */
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
 });
 
-/* manejador final */
 app.use(errorHandler);
 
-/* ---------- arranque Mongo + server ---------- */
 async function start() {
   try {
     await mongoose.connect(MONGODB_URI);
