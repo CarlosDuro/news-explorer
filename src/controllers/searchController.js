@@ -2,7 +2,6 @@ export async function searchNews(req, res, next) {
   try {
     const q = (req.query.q || '').trim() || 'news';
 
-    // mock estable (como el que te devolvió Render)
     const items = [
       {
         title: 'El nuevo AI Mode de Google estrena una función que hará temblar a ChatGPT',
@@ -14,7 +13,7 @@ export async function searchNews(req, res, next) {
       },
       {
         title: 'Nueva ayuda para estudiantes: Google te regala 12 meses de su IA más TOP',
-        text: 'Ser estudiante ya no solo es interesante para contratar...',
+        text: 'Google tiene activa una promo para estudiantes...',
         date: '2025-10-13',
         source: 'Hipertextual',
         link: 'https://hipertextual.com/tecnologia/nueva-ayuda-para-estudiantes-google-te-regala-12-meses-de-su-ia-mas-top-y-2-tb-de-memoria-en-la-nube/',
@@ -25,9 +24,9 @@ export async function searchNews(req, res, next) {
     res.json({
       query: q,
       total: items.length,
-      items,
+      items
     });
-  } catch (e) {
-    next(e);
+  } catch (err) {
+    next(err);
   }
 }

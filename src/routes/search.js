@@ -3,7 +3,6 @@ import { searchNews } from '../controllers/searchController.js';
 
 const router = express.Router();
 
-// GET /search?q=algo
 router.get('/', searchNews);
 
 export default router;
