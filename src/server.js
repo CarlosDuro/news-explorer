@@ -79,3 +79,34 @@ async function start() {
 }
 
 start();
+
+// --- mock /search for frontend ---
+app.get('/search', (req, res) => {
+  const q = (req.query.q || '').toString();
+
+  const items = [
+    {
+      title: 'Google lanza Gemini 2.5',
+      text: 'Nueva versión enfocada en tareas complejas.',
+      date: '2025-10-29',
+      source: 'Demo source',
+      link: 'https://example.com/gemini',
+      image: 'https://picsum.photos/400'
+    },
+    {
+      title: 'IA en móviles',
+      text: 'Los fabricantes meten IA en todos los modelos.',
+      date: '2025-10-28',
+      source: 'Demo source',
+      link: 'https://example.com/moviles-ia',
+      image: 'https://picsum.photos/401'
+    }
+  ];
+
+  res.json({
+    query: q,
+    total: items.length,
+    items
+  });
+});
+// --- end mock /search ---
