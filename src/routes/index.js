@@ -1,19 +1,17 @@
 import { Router } from 'express';
-
-// estas rutas deberían existir ya en tu proyecto, porque antes sí podías hacer /auth/signin y /articles
 import authRouter from './auth.js';
-import usersRouter from './users.js';
 import articlesRouter from './articles.js';
+import searchRouter from './search.js';
 
 const router = Router();
 
-// auth: /auth/signin, /auth/signup, etc.
+// login, registro, me
 router.use('/auth', authRouter);
 
-// users: /users/me, etc. (si tu proyecto lo trae)
-router.use('/users', usersRouter);
-
-// artículos guardados: esto es lo que el frontend está llamando con GET /articles y POST /articles
+// artículos guardados (requiere auth dentro del archivo)
 router.use('/articles', articlesRouter);
+
+// buscador (el mock que tienes en src/routes/search.js)
+router.use('/search', searchRouter);
 
 export default router;
