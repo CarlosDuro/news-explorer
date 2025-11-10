@@ -3,10 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>News Explorer</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="./styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- los CSS que ya tenía tu proyecto -->
+    <link rel="stylesheet" href="./base.css" />
+    <link rel="stylesheet" href="./header.css" />
+    <link rel="stylesheet" href="./tokens.css" />
+    <!-- si tienes alguno más (search.css, cards.css, etc.) lo puedes añadir aquí -->
+
   </head>
   <body>
+    <!-- HEADER ÚNICO -->
     <header class="site-header">
       <div class="brand">News Explorer</div>
       <nav class="mainnav" data-nav>
@@ -17,12 +24,18 @@
         <button class="btn-outline" data-signin-btn>Sign in</button>
       </div>
       <div class="auth auth--user" data-auth-user style="display:none">
-        <span data-username>Carlos</span>
+        <span data-username></span>
         <button class="btn-outline" data-logout-btn>Logout</button>
       </div>
     </header>
 
+    <!-- barra azul que tenías debajo del header -->
+    <div class="logout-bar" data-logout-bar style="display:none">
+      <button class="btn-primary" data-logout-btn-secondary>Logout</button>
+    </div>
+
     <main class="page">
+      <!-- hero / buscador -->
       <section class="hero">
         <h1>What is going on in the world?</h1>
         <p>Find the latest news on any topic and save the articles you like.</p>
@@ -39,10 +52,12 @@
         <p id="resultsCount" class="text-muted"></p>
       </section>
 
+      <!-- resultados de búsqueda -->
       <section class="results" id="results">
         <div class="cards" data-results></div>
       </section>
 
+      <!-- artículos guardados -->
       <section class="saved" id="saved" style="display:none">
         <h2>Saved Articles</h2>
         <div class="cards" data-saved></div>
