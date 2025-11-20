@@ -1,5 +1,5 @@
 // src/components/Header/Header.jsx
-import './header.css';
+import '../../styles/header.css';
 
 export default function Header({
   isLoggedIn,
