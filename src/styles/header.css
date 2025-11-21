@@ -1,11 +1,11 @@
-@import '../styles/tokens.css';
+/* src/components/Header/Header.css */
+@import '../../styles/tokens.css';
 
 /* ========== HEADER BASE ========== */
 
 .site-header {
   z-index: 30;
   width: 100%;
-  border-bottom: 1px solid var(--color-header-border);
 }
 
 /* contenedor interior centrado */
@@ -22,6 +22,8 @@
 .brand {
   font-weight: 700;
   font-size: 20px;
+  color: var(--color-text-main);
+  white-space: nowrap;
 }
 
 /* Nav principal (Inicio / Artículos guardados) */
@@ -38,11 +40,13 @@
   font-size: 14px;
   text-decoration: none;
   padding-bottom: 4px;
+  color: var(--color-text-muted);
 }
 
 /* Estado activo (subrayado) */
 .mainnav a.is-active {
   font-weight: 500;
+  color: var(--color-text-main);
 }
 
 .mainnav a.is-active::after {
@@ -53,6 +57,7 @@
   bottom: 0;
   height: 2px;
   border-radius: 999px;
+  background-color: var(--color-text-main);
 }
 
 /* Bloques de auth */
@@ -73,6 +78,8 @@
   background-color: transparent;
   font-size: 14px;
   cursor: pointer;
+  color: var(--color-text-main);
+  white-space: nowrap;
 }
 
 .auth-user-pill__name {
@@ -93,15 +100,12 @@
   top: 0;
   left: 0;
   right: 0;
-  border-bottom: none;
   background: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.35); /* línea blanca translúcida */
 }
 
 .site-header--over-hero .brand,
-.site-header--over-hero .mainnav a,
-.site-header--over-hero .auth-user-pill,
-.site-header--over-hero .auth--guest .btn-outline {
+.site-header--over-hero .mainnav a {
   color: #ffffff;
 }
 
@@ -109,7 +113,14 @@
   background-color: #ffffff;
 }
 
+/* botones de auth sobre el hero */
+.site-header--over-hero .auth-user-pill {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
 .site-header--over-hero .auth--guest .btn-outline {
+  color: #ffffff;
   border-color: #ffffff;
   background-color: transparent;
 }
@@ -124,6 +135,7 @@
   position: sticky;
   top: 0;
   background-color: #ffffff;
+  border-bottom: 1px solid var(--color-header-border);
 }
 
 .site-header:not(.site-header--over-hero) .brand,
@@ -140,7 +152,6 @@
   border-color: #bfdbfe;
 }
 
-/* header en saved: pill con texto oscuro */
 .site-header:not(.site-header--over-hero) .auth-user-pill {
   color: var(--color-text-main);
 }
