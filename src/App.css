@@ -1,6 +1,6 @@
 /* Importamos los estilos del antiguo proyecto vanilla */
 @import './styles/base.css';
-@import './styles/header.css';
+@import './styles/Header.css';
 @import './styles/tokens.css';
 @import './styles/results.css';
 @import './styles/auth.css';
