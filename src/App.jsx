@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-import Header from './components/Header/Header.jsx';
+import Header, { Footer } from './components/Header/Header.jsx';
 import AuthModal from './components/AuthModal/AuthModal.jsx';
 import SuccessModal from './components/SuccessModal/SuccessModal.jsx';
 import SearchBar from './components/SearchBar/SearchBar.jsx';
@@ -361,6 +361,9 @@ function App() {
 
       {/* Bloque "Acerca del autor" visible en todas las pantallas */}
       <AboutAuthor />
+
+      {/* Footer visible en todas las pantallas */}
+      <Footer />
 
       {/* Modal login/register */}
       {isAuthOpen && (
