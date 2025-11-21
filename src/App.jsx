@@ -10,7 +10,7 @@ import Results from './components/Results/Results.jsx';
 import SavedArticles from './components/SavedArticles/SavedArticles.jsx';
 import AboutAuthor from './components/AboutAuthor/AboutAuthor.jsx';
 
-const API_BASE = 'http://localhost:8080';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 const PAGE_SIZE = 3;
 
 // Helper genérico para la API (sin auth)
