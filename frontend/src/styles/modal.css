@@ -1,0 +1,299 @@
+/* Overlay general */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* un poco más oscuro */
+}
+
+/* Caja blanca centrada tipo Figma */
+.modal__dialog {
+  position: relative;
+
+  width: 430px;
+  max-width: 90vw;
+  min-height: 380px;
+
+  margin: 120px auto;
+
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #000000;
+
+  padding: 32px 40px 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* Botón de cerrar (la X) */
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: #b6bcbf;
+}
+
+.modal__close:hover {
+  color: #2f71e5;
+}
+
+/* Título */
+.modal__title {
+  margin: 0 0 32px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1b22;
+}
+
+/* Mensaje genérico (éxito / error) */
+.modal__message {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+
+/* Formulario */
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center; /* centramos todo dentro del modal */
+}
+
+.modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  width: 344px; /* ancho interno como en Figma */
+}
+
+.modal__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #2f71e5;
+}
+
+/* Inputs estilo Figma (solo línea inferior) */
+.modal__input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* solo línea inferior */
+  border-radius: 0; /* sin bordes redondeados */
+  padding: 10px 0 8px;
+  font-size: 16px;
+  outline: none;
+  background: transparent;
+}
+
+.modal__input::placeholder {
+  color: #b6bcbf;
+}
+
+.modal__input:focus {
+  border-bottom-color: #2f71e5;
+}
+
+/* Mensajes de error de los campos */
+.modal__error {
+  min-height: 16px;
+  font-size: 12px;
+  color: #e53935;
+}
+
+/* Botón principal (azul, grande, como screenshot) */
+.modal__submit {
+  margin-top: 28px;
+  width: 344px; /* mismo ancho que campos */
+  height: 64px;
+  border-radius: 100px;
+  background: #2f71e5;
+  color: #ffffff;
+  border: none;
+  padding: 0 24px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(47, 113, 229, 0.5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__submit:hover:not(:disabled) {
+  background: #347eff;
+}
+
+.modal__submit:disabled {
+  background: #e6e8eb;
+  color: #b6bcbf;
+  box-shadow: none;
+  cursor: default;
+}
+
+/* Texto "o inscribirse / o iniciar sesión" */
+.modal__switch {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.modal__switch-text {
+  color: #b6bcbf;
+}
+
+.modal__switch-link {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: #2f71e5;
+  cursor: pointer;
+}
+
+/* Truco: el que tenga .modal__tab--active se oculta
+   así en login solo se ve "inscribirse" y en register solo "iniciar sesión" */
+.modal__switch-link.modal__tab--active {
+  display: none;
+}
+
+/* Responsive pequeño */
+@media (max-width: 600px) {
+  .modal__dialog {
+    margin: 40px 16px;
+    padding: 24px 20px 16px;
+  }
+
+  .modal__title {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  .modal__submit {
+    height: 56px;
+    font-size: 16px;
+  }
+}
+
+/* === MODAL DE ÉXITO: tamaño 430x380 aprox y estilos tipo Figma === */
+
+#authSuccess .modal__dialog {
+  max-width: 430px;
+  padding: 32px 40px;
+  border-radius: 16px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Título igual que el de Figma */
+#authSuccess .modal__title {
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0 0 24px;
+}
+
+/* Contenedor del contenido centrado verticalmente un poco */
+#authSuccess .modal__content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* “Iniciar sesión” como enlace azul, no botón gris */
+#authSuccess .modal__success-link,
+#authSuccess button[data-auth-success-go-login] {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #2f71e5; /* azul principal */
+  cursor: pointer;
+}
+
+#authSuccess .modal__success-link:hover,
+#authSuccess button[data-auth-success-go-login]:hover {
+  text-decoration: underline;
+}
+
+/* Cerrar (X) igual que el modal principal */
+#authSuccess .modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* =============================== */
+/*  MODAL DE ÉXITO – IGUAL A FIGMA */
+/* =============================== */
+
+.modal__dialog--success {
+  width: 430px !important;
+  min-height: 182px !important;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 24px 24px 24px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+/* Título */
+.modal-success__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+/* Botón "Iniciar sesión" */
+.modal-success__link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #2f71e5;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.modal-success__link:hover {
+  text-decoration: underline;
+}
+
+/* Botón X */
+#authSuccessModal .modal__close {
+  right: 16px;
+  top: 16px;
+  font-size: 20px;
+  opacity: 0.6;
+}
+
+#authSuccessModal .modal__close:hover {
+  opacity: 1;
+}

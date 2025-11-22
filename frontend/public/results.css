@@ -1,0 +1,227 @@
+/* Contenedor de resultados y guardados */
+.results,
+.saved {
+  padding: 2rem 1.5rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Texto de estado ("Buscando...", "No se ha encontrado nada", error, etc.) */
+.results-status {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Cabecera de "Saved Articles" con resumen de keywords */
+.saved-header-info {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Grid de tarjetas */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* Responsivo: tablet */
+@media (max-width: 960px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Responsivo: móvil */
+@media (max-width: 640px) {
+  .results,
+  .saved {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tarjeta de noticia */
+.news-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.25rem 1.5rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition:
+    transform 0.15s ease-out,
+    box-shadow 0.15s ease-out;
+}
+
+/* Microanimación de hover en tarjetas */
+.news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+/* Línea superior de la tarjeta en Saved (keyword + papelera) */
+.card-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+/* Keyword en tarjetas guardadas */
+.card-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Título de la noticia */
+.news-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: #0f172a;
+}
+
+/* Meta (fuente + fecha) */
+.news-card .meta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Texto del artículo */
+.news-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #1f2933;
+}
+
+/* Contenedor de acciones */
+.news-card .actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+/* Botones generales (heredan de tokens.css/base.css si ya los tienes) */
+.btn,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease-out,
+    color 0.15s ease-out,
+    border-color 0.15s ease-out,
+    box-shadow 0.15s ease-out,
+    transform 0.1s ease-out;
+}
+
+/* Botón primario */
+.btn {
+  background-color: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Hover y active */
+.btn:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Botón outline */
+.btn-outline {
+  background-color: transparent;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.btn-outline:hover {
+  background-color: #eff6ff;
+  border-color: #93c5fd;
+}
+
+/* Botón "Logout" en la barra azul si lo usas */
+.btn-logout {
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* Botón de icono (papelera, guardar, etc.) */
+.icon-btn {
+  border: none;
+  background: rgba(15, 23, 42, 0.04);
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease-out,
+    transform 0.1s ease-out;
+}
+
+/* Hover iconos */
+.icon-btn:hover {
+  background: rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Icono de papelera simple con ::before (placeholder) */
+.icon-trash::before {
+  content: '🗑';
+  font-size: 0.95rem;
+}
+
+/* Botón "Mostrar más" centrado */
+#showMoreBtn {
+  margin: 2rem auto 0;
+  display: none; /* app.js lo pone en inline-flex cuando hay más resultados */
+}
+/* Icono de guardar (bookmark) en las tarjetas de resultados */
+.icon-bookmark::before {
+  content: '☆'; /* estrella vacía */
+  font-size: 1rem;
+}
+
+/* Cuando el artículo ya está guardado */
+.icon-bookmark--active {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.icon-bookmark--active::before {
+  content: '★'; /* estrella rellena */
+}

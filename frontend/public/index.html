@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>News Explorer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="./base.css" />
+    <link rel="stylesheet" href="./header.css" />
+    <link rel="stylesheet" href="./tokens.css" />
+    <link rel="stylesheet" href="./results.css" />
+    <link rel="stylesheet" href="./auth.css" />
+    <link rel="stylesheet" href="./modal.css" />
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="brand">News Explorer</div>
+
+      <nav class="mainnav" data-nav>
+        <a href="#" class="link-home is-active">Home</a>
+        <!-- Oculto por defecto, solo se muestra si hay sesión -->
+        <a href="#saved" class="link-saved" style="display: none">Saved Articles</a>
+      </nav>
+
+      <!-- Estado no logueado -->
+      <div class="auth auth--guest" data-auth-guest>
+        <button class="btn-outline" data-signin-btn>Sign in</button>
+      </div>
+
+      <!-- Estado logueado -->
+      <div class="auth auth--user" data-auth-user style="display: none">
+        <span data-username></span>
+        <button class="btn-outline" data-logout-btn>Logout</button>
+      </div>
+    </header>
+
+    <!-- Barra azul de logout cuando hay sesión -->
+    <div class="logout-bar" data-logout-bar style="display: none">
+      <button class="btn-logout" data-logout-btn-secondary>Logout</button>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="page">
+      <section class="hero">
+        <h1>What is going on in the world?</h1>
+        <p>Find the latest news on any topic and save the articles you like.</p>
+
+        <form id="searchForm" class="searchbar" data-search-form>
+          <input data-search-input type="text" name="q" placeholder="Buscar noticias..." required />
+          <button class="btn" type="submit">Search</button>
+        </form>
+
+        <p id="resultsCount" class="text-muted"></p>
+      </section>
+
+      <!-- BLOQUE DE RESULTADOS (solo después de buscar) -->
+      <section class="results" id="results" style="display: none">
+        <!-- Mensaje de estado: cargando / sin resultados / error -->
+        <p id="resultsStatus" class="results-status" hidden></p>
+
+        <!-- Cards -->
+        <div class="cards" data-results></div>
+
+        <!-- Botón "Mostrar más" -->
+        <button class="btn" id="showMoreBtn" style="display: none">Mostrar más</button>
+      </section>
+
+      <!-- PÁGINA DE ARTÍCULOS GUARDADOS -->
+      <section class="saved" id="saved" style="display: none">
+        <h2>Saved Articles</h2>
+        <p id="savedHeaderInfo" class="saved-header-info"></p>
+        <div class="cards" data-saved></div>
+      </section>
+    </main>
+
+    <!-- MODAL LOGIN / REGISTER -->
+    <div id="authModal" class="modal" hidden>
+      <div class="modal__overlay" data-modal-backdrop></div>
+
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+        <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>×</button>
+
+        <!-- Tabs tipo Figma: Sign in / Sign up -->
+        <div class="modal__tabs">
+          <button type="button" class="modal__tab modal__tab--active" data-auth-switch="login">
+            Iniciar sesión
+          </button>
+          <button type="button" class="modal__tab" data-auth-switch="register">Inscribirse</button>
+        </div>
+
+        <!-- Título dinámico -->
+        <h2 id="authModalTitle" class="modal__title" data-auth-title>Iniciar sesión</h2>
+
+        <!-- Mensaje general (errores servidor, etc.) -->
+        <p class="modal__message" data-auth-message hidden></p>
+
+        <!-- FORMULARIO -->
+        <form class="modal__form" data-auth-form novalidate>
+          <!-- Email -->
+          <label class="modal__field">
+            <span class="modal__label">Correo electrónico</span>
+            <input
+              class="modal__input"
+              type="email"
+              name="email"
+              autocomplete="email"
+              data-auth-email
+              required
+            />
+            <span class="modal__error" data-auth-error-email></span>
+          </label>
+
+          <!-- Password -->
+          <label class="modal__field">
+            <span class="modal__label">Contraseña</span>
+            <input
+              class="modal__input"
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              data-auth-password
+              required
+            />
+            <span class="modal__error" data-auth-error-password></span>
+          </label>
+
+          <!-- Name (solo en registro) -->
+          <label class="modal__field" data-auth-name-wrapper hidden>
+            <span class="modal__label">Nombre</span>
+            <input
+              class="modal__input"
+              type="text"
+              name="name"
+              autocomplete="name"
+              data-auth-name
+            />
+            <span class="modal__error" data-auth-error-name></span>
+          </label>
+
+          <!-- Botón enviar -->
+          <button class="modal__submit btn" type="submit" data-auth-submit disabled>
+            Iniciar sesión
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL ÉXITO DE REGISTRO -->
+    <div class="modal" id="authSuccess" hidden>
+      <div class="modal__overlay" data-auth-success-close></div>
+
+      <div
+        class="modal__dialog modal__dialog--success"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="authSuccessTitle"
+      >
+        <button class="modal__close" type="button" aria-label="Cerrar" data-auth-success-close>
+          ×
+        </button>
+
+        <div class="modal-success">
+          <h2 id="authSuccessTitle" class="modal-success__title">
+            ¡El registro se ha completado con éxito!
+          </h2>
+
+          <!-- Link azul "Iniciar sesión" -->
+          <button class="modal__success-link" type="button" data-auth-success-go-login>
+            Iniciar sesión
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPT PRINCIPAL -->
+    <script src="./app.js"></script>
+  </body>
+</html>

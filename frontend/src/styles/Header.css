@@ -1,0 +1,233 @@
+/* src/styles/Header.css */
+@import './tokens.css';
+
+/* ========== HEADER BASE ========== */
+
+.site-header {
+  z-index: 30;
+  width: 100%;
+}
+
+/* contenedor interior centrado */
+.site-header-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Marca / logo */
+.brand {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--color-text-main);
+  white-space: nowrap;
+}
+
+/* Nav principal (Inicio / Artículos guardados) */
+.mainnav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 24px;
+}
+
+.mainnav a {
+  position: relative;
+  font-size: 14px;
+  text-decoration: none;
+  padding-bottom: 4px;
+  color: var(--color-text-muted);
+}
+
+/* Estado activo (subrayado) */
+.mainnav a.is-active {
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
+.mainnav a.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 999px;
+  background-color: var(--color-text-main);
+}
+
+/* Bloques de auth */
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Pill con el nombre del usuario (lado derecho) */
+.auth-user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--color-text-main);
+  white-space: nowrap;
+}
+
+.auth-user-pill__name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-user-pill__icon {
+  font-size: 14px;
+}
+
+/* ---------- Variante HOME: header sobre el hero ---------- */
+
+.site-header--over-hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.site-header--over-hero .brand,
+.site-header--over-hero .mainnav a {
+  color: #ffffff;
+}
+
+.site-header--over-hero .mainnav a.is-active::after {
+  background-color: #ffffff;
+}
+
+/* botones de auth sobre el hero */
+.site-header--over-hero .auth-user-pill {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.site-header--over-hero .auth--guest .btn-outline {
+  color: #ffffff;
+  border-color: #ffffff;
+  background-color: transparent;
+}
+
+.site-header--over-hero .auth--guest .btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Variante OTRAS PÁGINAS (Saved) ---------- */
+
+.site-header:not(.site-header--over-hero) {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--color-header-border);
+}
+
+.site-header:not(.site-header--over-hero) .brand,
+.site-header:not(.site-header--over-hero) .mainnav a {
+  color: var(--color-text-main);
+}
+
+.site-header:not(.site-header--over-hero) .mainnav a.is-active::after {
+  background-color: var(--color-text-main);
+}
+
+.site-header:not(.site-header--over-hero) .auth--guest .btn-outline {
+  color: var(--color-primary);
+  border-color: #bfdbfe;
+}
+
+.site-header:not(.site-header--over-hero) .auth-user-pill {
+  color: var(--color-text-main);
+}
+
+/* ========== FOOTER ========== */
+
+.site-footer {
+  border-top: 1px solid var(--color-header-border);
+  background-color: #f5f5f5;
+}
+
+.site-footer-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--color-text-main);
+}
+
+.site-footer-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.site-footer-separator {
+  opacity: 0.6;
+}
+
+.site-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.site-footer-link {
+  text-decoration: none;
+  color: var(--color-text-main);
+}
+
+.site-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+  .site-header-inner {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .mainnav {
+    gap: 16px;
+    margin-right: 12px;
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .auth-user-pill {
+    padding: 6px 12px;
+  }
+
+  .site-footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .site-footer-right {
+    gap: 12px;
+  }
+}

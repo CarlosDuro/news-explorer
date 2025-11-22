@@ -1,0 +1,17 @@
+/* Importamos los estilos del antiguo proyecto vanilla */
+@import './styles/base.css';
+@import './styles/Header.css';
+@import './styles/tokens.css';
+@import './styles/results.css';
+@import './styles/auth.css';
+@import './styles/modal.css';
+
+/* Contenedor raíz de React (Vite lo monta aquí) */
+#root {
+  min-height: 100vh;
+}
+
+/* Contenedor principal de la app */
+.app-root {
+  min-height: 100vh;
+}

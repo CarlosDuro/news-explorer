@@ -1,0 +1,25 @@
+:root {
+  /* Tipografía */
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Colores principales del layout News Explorer */
+  --color-bg-page: #ffffff;
+  --color-bg-section: #f5f6f7;
+  --color-bg-card: #ffffff;
+
+  --color-text-main: #1a1b22;
+  --color-text-muted: #b6bcbf;
+  --color-text-secondary: #2f71e5;
+
+  --color-border-light: #d1d2d6;
+  --color-header-border: #e5e5e5;
+
+  --color-primary: #2f71e5;
+  --color-primary-hover: #347eff;
+  --color-primary-active: #2a65cc;
+
+  /* Sombras y radios */
+  --radius-card: 16px;
+  --radius-pill: 100px;
+  --shadow-card: 0 10px 30px rgba(7, 59, 116, 0.15);
+}

@@ -1,0 +1,20 @@
+.searchbar {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  background: #fff;
+}
+
+.searchbar input {
+  flex: 1;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 12px;
+  padding: .55rem .7rem;
+  font-size: .9rem;
+  outline: none;
+}
+
+.searchbar input:focus {
+  border-color: rgba(34,103,216,.55);
+  box-shadow: 0 0 0 3px rgba(34,103,216,.08);
+}

@@ -1,0 +1,144 @@
+/* Overlay del modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+/* Fondo oscuro */
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+/* Caja del modal */
+.modal__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem 1.75rem;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Botón de cerrar (X) */
+.modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #64748b;
+}
+
+/* Tabs */
+.modal__tabs {
+  display: inline-flex;
+  align-items: center;
+  background: #e5e7eb;
+  border-radius: 999px;
+  padding: 0.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.modal__tab {
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.modal__tab--active {
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.16);
+}
+
+/* Título */
+.modal__title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+/* Mensaje general (errores o éxito) */
+.modal__message {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #dc2626; /* rojo por defecto; puedes cambiar si es éxito */
+}
+
+/* Formulario */
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Campo */
+.modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.modal__label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.modal__field input {
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.15s ease-out,
+    box-shadow 0.15s ease-out;
+}
+
+.modal__field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+}
+
+/* Error por campo */
+.modal__error {
+  min-height: 1rem;
+  font-size: 0.75rem;
+  color: #dc2626;
+}
+
+/* Botón submit */
+.modal__submit {
+  margin-top: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.modal__submit[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}

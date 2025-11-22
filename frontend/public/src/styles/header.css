@@ -1,0 +1,124 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--background);
+  border-bottom: 1px solid var(--border-color);
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  gap: var(--space-4);
+}
+.brand {
+  font-weight: var(--font-bold);
+  font-size: var(--fs-lg);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+.nav a {
+  color: var(--main-text);
+  font-weight: var(--font-medium);
+}
+.nav a.active {
+  color: var(--accent-color);
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.btn-outline {
+  background: #fff;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: calc(var(--space-2) + 2px) var(--space-4);
+  border-radius: var(--radius);
+}
+.btn-outline:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+/* Hamburguesa */
+.burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: #fff;
+  align-items: center;
+  justify-content: center;
+}
+.burger span {
+  width: 20px;
+  height: 2px;
+  background: var(--main-text);
+  position: relative;
+  display: block;
+}
+.burger span::before,
+.burger span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: var(--main-text);
+}
+.burger span::before {
+  top: -6px;
+}
+.burger span::after {
+  top: 6px;
+}
+
+/* Menu móvil */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+  .burger {
+    display: inline-flex;
+  }
+  .mobile {
+    position: fixed;
+    inset: 64px 0 0 0;
+    background: #fff;
+    display: none;
+    padding: 16px;
+    border-top: 1px solid var(--border-color);
+  }
+  .mobile a {
+    display: block;
+    padding: 12px 8px;
+    color: var(--main-text);
+    border-radius: 8px;
+  }
+  .mobile a.active {
+    background: var(--surface);
+    color: var(--accent-color);
+  }
+  .mobile .auth {
+    margin-top: 12px;
+  }
+  .mobile.open {
+    display: block;
+  }
+}
+
+/* Estado autenticado/guest (controlado con .is-authenticated en <body>) */
+body.is-authenticated .auth--guest {
+  display: none;
+}
+body:not(.is-authenticated) .auth--user {
+  display: none;
+}
