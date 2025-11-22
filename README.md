@@ -6,5 +6,6 @@ Este repositorio agrupa el frontend y el backend del proyecto **News Explorer**.
 
 - **Frontend (GitHub):** https://github.com/CarlosDuro/news-explorer-frontend  
 - **Backend (GitHub):** https://github.com/CarlosDuro/news-explorer-backend  
-- **Frontend desplegado (Render):** https://news-explorer-frontend-4m2q.onrender.com/
+- **Frontend desplegado (Render):** https://news-explorer-frontend-4m2q.onrender.com/  
+- **Tablero de Trello (organización del proyecto):** https://trello.com/b/LFSvSuo9/proyecto-final-news-explorer
 
